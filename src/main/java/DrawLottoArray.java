@@ -1,6 +1,3 @@
-import com.sun.deploy.util.ArrayUtil;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +45,7 @@ public class DrawLottoArray {
 
     public void resultFiller(){
 
-        Integer[] resultArray = new Integer[2];
+        List<Integer[]> resultArray = new ArrayList<Integer[]>();
         int max = 0;
 
         for(Integer[] arr : this.lottoArray){
@@ -60,13 +57,15 @@ public class DrawLottoArray {
             }
             for(Integer number : arr) {
                 if(number.equals(max)){
-                    resultArray[0] = this.lottoArray.indexOf(arr);
-                    resultArray[1] = Arrays.asList(arr).indexOf(number);
+                    Integer[] result = new Integer[2];
+                    result[0] = this.lottoArray.indexOf(arr);
+                    result[1] = Arrays.asList(arr).indexOf(number);
+                    resultArray.add(result);
                 }
             }
         }
 
-        this.resultArray.add(resultArray);
+        this.resultArray.addAll(resultArray);
     }
 
 
