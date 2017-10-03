@@ -44,28 +44,41 @@ public class DrawLottoArray {
     }
 
     public void resultFiller(){
+        int max = findMax();
+        this.resultArray.addAll(fillByCompareValuesByMax(max));
+    }
 
-        List<Integer[]> resultArray = new ArrayList<Integer[]>();
+    private int findMax(){
+
         int max = 0;
-
         for(Integer[] arr : this.lottoArray){
-
             Integer[] tempArray = arr.clone();
             Arrays.sort(tempArray);
             if(tempArray.length > 0) {
-                max = tempArray[tempArray.length - 1];
+                if(tempArray[tempArray.length - 1] > max) {
+                    max = tempArray[tempArray.length - 1];
+                }
             }
+        }
+        return max;
+    }
+
+    private List<Integer[]> fillByCompareValuesByMax(int max){
+        List<Integer[]> resultArray = new ArrayList<Integer[]>();
+        for(Integer[] arr : this.lottoArray){
+            int valueByIndex = 0;
             for(Integer number : arr) {
-                if(number.equals(max)){
+                valueByIndex++;
+                int indexOfArr = this.lottoArray.indexOf(arr);
+                if(number == max){
                     Integer[] result = new Integer[2];
-                    result[0] = this.lottoArray.indexOf(arr);
-                    result[1] = Arrays.asList(arr).indexOf(number);
+                    result[0] = indexOfArr+1;
+                    result[1] = valueByIndex + indexOfArr+1;
                     resultArray.add(result);
                 }
             }
         }
-
-        this.resultArray.addAll(resultArray);
+        return resultArray;
     }
 
 
@@ -88,17 +101,24 @@ public class DrawLottoArray {
             System.out.println();
         }
     }
-    public static void main(String[] args) {
 
-        DrawLottoArray lottoArray = new DrawLottoArray();
+    public void resultArraySTDOUT(){
 
-        lottoArray.makeLottoFiveArray();
-        lottoArray.mFOPLogic();
-        lottoArray.lottoArraySTDOUT();
-        lottoArray.resultFiller();
-
-        for(Integer[] resultList : lottoArray.resultArray){
+        for(Integer[] resultList : this.resultArray){
             System.out.println("Pair of " + resultList[0] + " and " + resultList[1] );
         }
+    }
+
+    public static void logic(){
+
+        DrawLottoArray lottoArray = new DrawLottoArray();
+        lottoArray.makeLottoFiveArray();
+        lottoArray.mFOPLogic();
+        lottoArray.resultFiller();
+        lottoArray.resultArraySTDOUT();
+    }
+
+    public static void main(String[] args) {
+        logic();
     }
 }
